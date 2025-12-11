@@ -1,11 +1,11 @@
 # 📦 Estoque API - Sistema de Gerenciamento de Ativos
 
-> Status do Projeto: 🚀 Concluído (Backend)
+> Status do Projeto: 🚀 Concluído (CRUD Completo + Regras de Negócio)
 
 ### 📖 Sobre
 API RESTful desenvolvida para gerenciamento de estoque e ativos. O projeto foi criado com o objetivo de aplicar conceitos sólidos de **Engenharia de Software**, focando em uma arquitetura limpa, escalável e conectada a um banco de dados real.
 
-A ideia nasceu da necessidade de organizar equipamentos (hardware, áudio, etc.), permitindo cadastro e consulta de forma rápida e padronizada.
+A ideia nasceu da necessidade de organizar equipamentos (hardware, áudio, etc.), permitindo cadastro, consulta, atualização e controle de fluxo de estoque de forma padronizada.
 
 ---
 
@@ -22,30 +22,32 @@ A ideia nasceu da necessidade de organizar equipamentos (hardware, áudio, etc.)
 
 ### ⚙️ Arquitetura do Projeto
 
-O projeto segue a arquitetura **MVC (Model-View-Controller)** adaptada para API REST, garantindo a separação de responsabilidades:
+O projeto segue a arquitetura **MVC (Model-View-Controller)** adaptada para API REST:
 
-1.  **Controller (`ItemController`)**:
-    * A "Porta de Entrada" da API.
-    * Recebe as requisições HTTP (GET/POST) e decide para onde mandar.
-    * Exposto na rota: `/itens`.
-
-2.  **Model (`Item`)**:
-    * O "Molde" dos dados.
-    * Mapeia a classe Java diretamente para a tabela `tb_itens` no banco de dados usando anotações JPA (`@Entity`).
-
-3.  **Repository (`ItemRepository`)**:
-    * O "Estoquista".
-    * Interface responsável por toda a comunicação com o MySQL.
-    * Abstrai comandos SQL complexos através do `JpaRepository`.
+1.  **Controller (`ItemController`)**: A "Porta de Entrada" da API. Recebe as requisições HTTP e decide para onde mandar.
+2.  **Model (`Item`)**: O "Molde" dos dados. Mapeia a classe Java diretamente para a tabela `tb_itens` no banco de dados.
+3.  **Repository (`ItemRepository`)**: O "Estoquista". Abstrai comandos SQL complexos através do `JpaRepository`.
 
 ---
 
 ### 🔌 Endpoints da API
 
-| Método | Rota | Descrição | Exemplo de JSON (Body) |
+Aqui estão as rotas disponíveis para interagir com o sistema:
+
+| Método | Rota | Descrição | Exemplo de Uso |
 | :--- | :--- | :--- | :--- |
-| **GET** | `/itens` | Lista todos os itens do banco | *N/A* |
-| **POST** | `/itens` | Cadastra um novo item | `{"nome": "Cabo XLR", "categoria": "AUDIO", "quantidade": 10}` |
+| **GET** | `/itens` | Lista todos os itens do banco | - |
+| **POST** | `/itens` | Cadastra um novo item | `{"nome": "Cabo XLR", "quantidade": 10, "filial": "CENTRO"}` |
+| **PUT** | `/itens/{id}` | Atualiza os dados de um item | `{"nome": "Cabo XLR Pro", ...}` |
+| **DELETE** | `/itens/{id}` | Remove um item do sistema | - |
+
+### 🧠 Funcionalidades Inteligentes (Regras de Estoque)
+Diferente de um CRUD comum, este sistema possui rotas dedicadas para a movimentação de estoque, garantindo integridade dos dados (não é possível vender mais do que se tem).
+
+| Método | Rota | Função |
+| :--- | :--- | :--- |
+| **PATCH** | `/itens/{id}/vender/{qtd}` | **Baixa de Estoque:** Subtrai a quantidade vendida do total. Retorna erro se o estoque for insuficiente. |
+| **PATCH** | `/itens/{id}/adicionar/{qtd}` | **Reposição:** Soma a nova quantidade ao estoque atual sem precisar reescrever o item todo. |
 
 ---
 
