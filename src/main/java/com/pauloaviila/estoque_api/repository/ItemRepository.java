@@ -1,4 +1,4 @@
-package com.pauloaviila.estoque_api.repository; // Ajustado
+package com.pauloaviila.estoque_api.repository; 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.pauloaviila.estoque_api.model.Item; // Import do SEU pacote

@@ -1,9 +1,11 @@
 package com.pauloaviila.estoque_api.model;
 
+//Mapeamento Objeto-Relacional (ORM)
+
 import jakarta.persistence.*; // Importa as anotações mágicas
 
 @Entity // Diz pro Spring: "Isso aqui vai virar uma tabela no MySQL"
-@Table(name = "tb_itens") // Opcional: define o nome da tabela
+@Table(name = "tb_itens") // define o nome da tabela
 public class Item {
 
     @Id // Diz que esse é a Chave Primária (PK)
@@ -13,6 +15,7 @@ public class Item {
     private String nome;
     private String categoria;
     private int quantidade;
+    private String filial;
 
     // Construtor Vazio 
     public Item() {}
@@ -36,4 +39,14 @@ public class Item {
 
     public int getQuantidade() { return quantidade; }
     public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+
+	public String getFilial() {
+		return filial;
+	}
+
+	public void setFilial(String filial) {
+		this.filial = filial;
+	}
+    
+    
 }

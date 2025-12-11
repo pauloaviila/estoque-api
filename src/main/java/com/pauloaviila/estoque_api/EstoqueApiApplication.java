@@ -1,12 +1,12 @@
-package com.pauloaviila.estoque_api; // Ajustado
+package com.pauloaviila.estoque_api; 
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class EstoqueApiApplication { // O nome da classe deve ser o que já está aí
+@SpringBootApplication // Varre o projeto inteiro, acha o banco, acha o controller e configura tudo sozinho
+public class EstoqueApiApplication { 
 
 	public static void main(String[] args) {
-		SpringApplication.run(EstoqueApiApplication.class, args);
+		SpringApplication.run(EstoqueApiApplication.class, args); // Sobe o server
 	}
 }
